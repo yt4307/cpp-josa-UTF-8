@@ -6,13 +6,30 @@
 #endif
 
 #include <string>
+#include <utility>
 
 using std::string;
+
+using std::pair;
+
+pair<string, string> josa(string str) {
+	if (str == "은" or str == "는") return { "은", "는" };
+	if (str == "이" or str == "가") return { "이", "가" };
+	if (str == "을" or str == "를") return { "을", "를" };
+	if (str == "과" or str == "와") return { "과", "와" };
+	if (str == "아" or str == "야") return { "아", "야" };
+	if (str == "이여" or str == "여") return { "이여", "여" };
+	if (str == "이랑" or str == "랑") return { "이랑", "랑" };
+	if (str == "으로" or str == "로") return { "으로", "로" };
+
+	return { "은", "는" };
+}
+
 
 // 은/는, 이/가, 을/를, 과/와, 아/야, 이여/여, 이랑/랑, 으로/로
 // 받침이 있으면 앞쪽, 받침이 없으면 뒤쪽
 // 단, 으로/로는 ㄹ받침일때도 으로가 아닌 로 사용
-string josa(string str, string firstPostposition, string secondPostposition) {
+string josaProcess(string str, string firstPostposition, string secondPostposition) {
 	string sourceString{ str };
 
 // 비주얼 스튜디오에서 컴파일한다면 십중팔구 CP_949를 쓸테니 이를 UTF-8로 변환해준다.
@@ -66,4 +83,9 @@ string josa(string str, string firstPostposition, string secondPostposition) {
 
 	// 원본 문자열에 선택된 조사를 붙여서 반환해준다.
 	return sourceString + selected;
+}
+
+
+string operator+(string str, pair<string, string> josa) {
+	return josaProcess(str, josa.first, josa.second);
 }
